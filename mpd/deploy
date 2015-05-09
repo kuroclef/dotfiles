@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo loginctl enable-linger "$(whoami)"
+systemctl --user --now enable mpd.service
