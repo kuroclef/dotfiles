@@ -1,0 +1,81 @@
+{
+  "sets": [
+    {
+      "name": "",
+      "overlays": {
+        "HDMI-A-1": {
+          "alpha": 1.0,
+          "grabbable": true,
+          "interactable": true,
+          "positioning": "Anchored",
+          "curvature": 0.15,
+          "additive": false,
+          "saved_transform": null
+        }
+      },
+      "hidden_overlays": {}
+    }
+  ],
+  "global_set": {
+    "watch": {
+      "alpha": 0.0,
+      "grabbable": false,
+      "interactable": true,
+      "positioning": {
+        "FollowHand": {
+          "hand": "Left",
+          "lerp": 1.0,
+          "align_to_hmd": false
+        }
+      },
+      "curvature": null,
+      "additive": false,
+      "saved_transform": null
+    }
+  },
+  "last_set": 0,
+  "attribs": [
+    [
+      "DP-1",
+      [
+        {
+          "Stereo": "None"
+        },
+        {
+          "MouseTransform": "Default"
+        }
+      ]
+    ],
+    [
+      "HDMI-A-1",
+      [
+        {
+          "Stereo": "None"
+        },
+        {
+          "MouseTransform": "Default"
+        }
+      ]
+    ],
+    [
+      "kbd",
+      []
+    ],
+    [
+      "anchor",
+      []
+    ],
+    [
+      "watch",
+      []
+    ],
+    [
+      "Dashboard",
+      []
+    ],
+    [
+      "grab-help",
+      []
+    ]
+  ]
+}
