@@ -1,0 +1,19 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -i lo -j ACCEPT
+-A INPUT -4 -s 192.168.1.0/24 -j ACCEPT
+-A INPUT -6 -s fe80::/64 -j ACCEPT
+-A INPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
+# WiVRn
+-A INPUT -p udp --dport 5353 -j ACCEPT
+
+# YouTube Playback Error Workaround.
+-A OUTPUT -6 -p tcp -d 2404:6800::/32 -j REJECT --reject-with tcp-reset
+
+# VRChat Social Bug Workaround.
+#-A OUTPUT -6 -p tcp -d 2606:4700::6812:1a24 -j REJECT --reject-with tcp-reset
+#-A OUTPUT -6 -p tcp -d 2606:4700::6812:1b24 -j REJECT --reject-with tcp-reset
+COMMIT

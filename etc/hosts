@@ -1,0 +1,10 @@
+# Static table lookup for hostnames.
+# See hosts(5) for details.
+127.0.0.1        localhost
+::1              localhost
+
+# VRChat Social Bug Workaround.
+104.18.26.36 api.vrchat.cloud
+104.18.27.36 api.vrchat.cloud
+104.18.26.36 pipeline.vrchat.cloud
+104.18.27.36 pipeline.vrchat.cloud
