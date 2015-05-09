@@ -1,0 +1,36 @@
+icons = "awesome"
+theme = "native"
+
+[[block]]
+block = "music"
+dynamic_width = true
+format = "{combo} "
+max_width = 128
+player = "spotify"
+
+[[block]]
+block = "sound"
+format = "{output_name} {volume}"
+icons_format = " {icon}"
+[block.mappings]
+"alsa_output.pci-0000_00_1f.3.analog-stereo" = ""
+#"alsa_output.hw_0_7" = ""
+"alsa_output.hw_0_7" = ""
+
+[[block]]
+block = "backlight"
+
+[[block]]
+block  = "net"
+format = "{ssid}"
+
+[[block]]
+block = "battery"
+device = "DisplayDevice"
+driver = "upower"
+format = "{percentage} {time}"
+
+[[block]]
+block = "time"
+format = "%F %a %R"
+interval = 1
