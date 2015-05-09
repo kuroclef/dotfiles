@@ -1,0 +1,119 @@
+include /etc/sway/config.d/*
+
+set $alt Mod1
+set $win Mod4
+
+set $b 
+set $d 
+set $m 
+set $s 
+set $t 
+
+#Solarized
+set $S_yellow  #b58900
+set $S_orange  #cb4b16
+set $S_red     #dc322f
+set $S_magenta #d33682
+set $S_violet  #6c71c4
+set $S_blue    #268bd2
+set $S_cyan    #2aa198
+set $S_green   #859900
+
+#Dark
+set $S_base03  #002b36
+set $S_base02  #073642
+set $S_base01  #586e75
+set $S_base00  #657b83
+set $S_base0   #839496
+set $S_base1   #93a1a1
+set $S_base2   #eee8d5
+set $S_base3   #fdf6e3
+
+#Light
+#set $S_base03  #fdf6e3
+#set $S_base02  #eee8d5
+#set $S_base01  #93a1a1
+#set $S_base00  #839496
+#set $S_base0   #657b83
+#set $S_base1   #586e75
+#set $S_base2   #073642
+#set $S_base3   #002b36
+
+bar {
+  colors {
+    background $S_base02
+    statusline $S_base1
+  }
+
+  font pango:monospace 12
+  gaps 8
+  height 16
+  position top
+  status_command i3status-rs
+}
+
+bindsym $alt+r     reload
+bindsym $alt+F4    kill
+bindsym $alt+Left  move workspace to output left
+bindsym $alt+Down  move workspace to output down
+bindsym $alt+Up    move workspace to output up
+bindsym $alt+Right move workspace to output right
+
+bindsym $win+a exec exec alacritty
+bindsym $win+b exec [ ! "$(pgrep firefox)"  ] && exec firefox  || swaymsg workspace \$b
+bindsym $win+c exec [ ! "$(pgrep chromium)" ] && exec chromium || swaymsg workspace \$b
+bindsym $win+d exec exec discord && swaymsg workspace \$d
+bindsym $win+h split vertical
+bindsym $win+m exec [ ! "$(pgrep terminal\.exe)" ] && LANG=ja_JP.UTF-8 exec wine ~/.local/bin/MetaTrader_4_Milton_Markets/terminal.exe || swaymsg workspace \$m
+bindsym $win+r exec LANG=ja_JP.UTF-8 exec rofi -show run
+bindsym $win+s exec exec steam
+bindsym $win+t exec [ ! "$(pgrep alacritty)" ] && exec alacritty || swaymsg workspace \$t
+bindsym $win+v split horizontal
+
+bindsym Pause      exec swayidle -w timeout 1 'swaymsg output \* dpms off' resume 'swaymsg output \* dpms on; pkill -nx swayidle'
+#bindsym Print      exec grim ~/Desktop/"$(date +%F%T.png | sed 's/[-:]//g')"
+bindsym Print      exec grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" ~/Desktop/"$(date +%F%T.png | sed 's/[-:]//g')"
+bindsym Print+$alt exec slurp | grim -g - ~/Desktop/"$(date +%F%T.png | sed 's/[-:]//g')"
+bindsym Print+$win exec swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | grim -g - ~/Desktop/"$(date +%F%T.png | sed 's/[-:]//g')"
+
+bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86MonBrightnessDown exec light -U 5
+bindsym XF86MonBrightnessUp   exec light -A 5
+
+default_border none
+default_floating_border none
+
+for_window [app_id="Alacritty"]    move container to workspace $t, workspace $t
+for_window [app_id="firefox"]      move container to workspace $b, workspace $b
+for_window [class="feh"]           fullscreen enable
+for_window [class="discord"]       move container to workspace $d, workspace $d
+for_window [class="Gimp"]          fullscreen enable
+for_window [class="Steam"]         move container to workspace $s, workspace $s
+for_window [class="steam_app_*"]   floating enable, move container to workspace $s, workspace $s
+for_window [class="terminal\.exe"] move container to workspace $m, workspace $m
+for_window [class="th0.\.exe"]     move container to workspace $s, workspace $s
+
+gaps inner 8
+
+input type:keyboard {
+  repeat_delay 200
+  repeat_rate 20
+  xkb_layout jp
+  xkb_options ctrl:nocaps,numpad:mac
+}
+
+input type:touchpad {
+  tap disabled
+}
+
+output * {
+  background ~/.config/wallpaper tile
+  subpixel none
+}
+
+exec exec gammastep -PO 4000 >/dev/null
+exec exec ibus-daemon -drx
+exec exec swayidle -w timeout 1800 'swaymsg output \* dpms off' resume 'swaymsg output \* dpms on'
+
+# vim:set ft=conf:

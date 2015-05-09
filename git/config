@@ -1,0 +1,28 @@
+[user]
+  name  = Moriya Kazumi
+  email = kuroclef@gmail.com
+
+[alias]
+  amend       = commit --allow-empty --amend --no-edit
+  commit      = commit --allow-empty-message
+  dispose     = !git reflog expire --all --expire=now && git gc --aggressive --prune=now
+  filter-date = filter-branch -f --env-filter 'GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"'
+
+[core]
+  quotepath = false
+
+[diff]
+  tool = vimdiff
+
+[difftool]
+  prompt = false
+
+[pager]
+  log  = /usr/share/git/diff-highlight/diff-highlight | less
+  show = /usr/share/git/diff-highlight/diff-highlight | less
+  diff = /usr/share/git/diff-highlight/diff-highlight | less
+
+[push]
+  default = matching
+
+# vim:set ft=gitconfig:
