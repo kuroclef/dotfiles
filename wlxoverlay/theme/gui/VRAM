@@ -1,0 +1,3 @@
+#!/bin/bash
+
+nvidia-smi --query-gpu=memory.used --format=noheader,nounits | awk '{ printf "VRAM:%4.1fGB/12GB", $1 / 1024 }'

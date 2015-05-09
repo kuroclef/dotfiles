@@ -1,0 +1,16 @@
+<layout>
+  <template name="Set">
+    <Button id="set_${idx}" _press="::SetToggle ${idx}" />
+  </template>
+
+  <elements>
+    <div width="240" flex_direction="column">
+      <label _source="clock" _display="time" size="70" />
+      <label _source="shell" _exec="sleep 1; date +%F\ %a" size="24" />
+      <label _source="shell" _exec="sleep 1; $HOME/.config/wlxoverlay/theme/gui/VRAM" size="20" />
+      <div id="sets">
+        <Set idx="0" display="1" />
+      </div>
+    </div>
+  </elements>
+</layout>
