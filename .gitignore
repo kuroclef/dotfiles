@@ -1,0 +1,7 @@
+mpd/*
+!mpd/deploy
+!mpd/local.conf
+!mpd/playlists/
+!mpd/radio.conf
+vim/*
+!vim/vimrc
