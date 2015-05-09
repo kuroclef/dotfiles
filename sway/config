@@ -1,0 +1,137 @@
+include /etc/sway/config.d/*
+
+set $alt Mod1
+set $win Mod4
+
+set $b 
+set $d 
+set $f 
+set $F "'"
+set $g 
+set $m 
+set $p 
+set $s 
+set $t 
+set $u 
+set $U "'"
+set $v 
+
+#Solarized
+set $S_yellow  #b58900
+set $S_orange  #cb4b16
+set $S_red     #dc322f
+set $S_magenta #d33682
+set $S_violet  #6c71c4
+set $S_blue    #268bd2
+set $S_cyan    #2aa198
+set $S_green   #859900
+
+#Dark
+set $S_base03  #002b36
+set $S_base02  #073642
+set $S_base01  #586e75
+set $S_base00  #657b83
+set $S_base0   #839496
+set $S_base1   #93a1a1
+set $S_base2   #eee8d5
+set $S_base3   #fdf6e3
+
+#Light
+#set $S_base03  #fdf6e3
+#set $S_base02  #eee8d5
+#set $S_base01  #93a1a1
+#set $S_base00  #839496
+#set $S_base0   #657b83
+#set $S_base1   #586e75
+#set $S_base2   #073642
+#set $S_base3   #002b36
+
+bar {
+  colors {
+    background $S_base02
+    statusline $S_base1
+  }
+
+  font pango:monospace 12
+  gaps 8
+  height 16
+  position top
+  status_command i3status-rs
+  status_edge_padding 0
+  status_padding 0
+}
+
+bindsym $alt+a move workspace $t
+bindsym $alt+b move workspace $f
+bindsym $alt+b+Shift move workspace $F
+bindsym $alt+d move workspace $d
+bindsym $alt+f move workspace $b
+bindsym $alt+g move workspace $g
+bindsym $alt+k move workspace $g
+bindsym $alt+m move workspace $m
+bindsym $alt+p move workspace $p
+bindsym $alt+r reload
+bindsym $alt+s move workspace $s
+bindsym $alt+t move workspace $t
+bindsym $alt+u move workspace $u
+bindsym $alt+u+Shift move workspace $U
+bindsym $alt+v move workspace $v
+bindsym $alt+F4    kill
+bindsym $alt+Left  move workspace to left
+bindsym $alt+Down  move workspace to down
+bindsym $alt+Up    move workspace to up
+bindsym $alt+Right move workspace to right
+
+bindsym $win+a workspace $t, exec alacritty
+bindsym $win+b workspace $f, exec [ "$(pgrep firefox)"   ] || firefox
+bindsym $win+b+Shift workspace $F, exec [ "$(pgrep firefox)"   ] || firefox
+bindsym $win+d workspace $d, exec discord
+bindsym $win+f workspace $b, exec [ "$(pgrep blender)"   ] || blender
+bindsym $win+g workspace $g, exec [ "$(pgrep gimp)"      ] || gimp
+bindsym $win+k workspace $g, exec [ "$(pgrep krita)"     ] || krita
+bindsym $win+m workspace $m, exec [ "$(pgrep spotify)"   ] || spotify --enable-features=UseOzonePlatform --ozone-platform=wayland
+bindsym $win+p workspace $p
+bindsym $win+s workspace $s, exec steam-native
+bindsym $win+t workspace $t, exec [ "$(pgrep alacritty)" ] || alacritty
+bindsym $win+u workspace $u, exec unityhub
+bindsym $win+u+Shift workspace $U, exec unityhub
+bindsym $win+v workspace $v
+
+bindsym Pause      exec swayidle -w timeout 1 'swaymsg output \* dpms off' resume 'swaymsg output \* dpms on; pkill -nx swayidle'
+#bindsym Print      exec grim ~/Pictures/"$(date +%F%T.png | sed 's/[-:]//g')"
+bindsym Print      exec grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" ~/Pictures/"$(date +%F%T.png | sed 's/[-:]//g')"
+bindsym Print+$alt exec slurp | grim -g - ~/Pictures/"$(date +%F%T.png | sed 's/[-:]//g')"
+bindsym Print+$win exec swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | grim -g - ~/Pictures/"$(date +%F%T.png | sed 's/[-:]//g')"
+
+bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+default_border none
+default_floating_border none
+
+for_window [class="feh"]          floating enable, move container to workspace $p, workspace $p
+for_window [class="steam_app_*"]  floating enable, move container to workspace $s, workspace $s
+
+gaps inner 8
+
+input type:keyboard {
+  repeat_delay 200
+  repeat_rate 20
+  xkb_layout jp
+  xkb_options ctrl:nocaps,numpad:mac
+}
+
+input type:touchpad {
+  tap disabled
+}
+
+output * {
+  background ~/repositories/dotfiles/wallpaper.png fill
+  subpixel none
+}
+
+exec exec gammastep -PO 4000 >/dev/null
+exec exec ibus-daemon -drx
+exec exec swayidle -w timeout 3600 'swaymsg output \* dpms off' resume 'swaymsg output \* dpms on'
+
+# vim:set ft=conf:
