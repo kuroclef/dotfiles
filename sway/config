@@ -1,0 +1,126 @@
+include /etc/sway/config.d/*
+
+set $alt Mod1
+set $win Mod4
+
+set $alacritty  Alacritty
+set $alcom      ALCOM
+set $blender    Blender
+set $discord    Discord
+set $firealpaca FireAlpaca
+set $firefox    Firefox
+set $spotify    Spotify
+set $steam      Steam
+set $unity      Unity
+set $vrchat     VRChat
+set $wivrn      WiVRn
+
+ #Solarized
+set $S_yellow  #b58900
+set $S_orange  #cb4b16
+set $S_red     #dc322f
+set $S_magenta #d33682
+set $S_violet  #6c71c4
+set $S_blue    #268bd2
+set $S_cyan    #2aa198
+set $S_green   #859900
+
+#Dark
+set $S_base03  #002b36
+set $S_base02  #073642
+set $S_base01  #586e75
+set $S_base00  #657b83
+set $S_base0   #839496
+set $S_base1   #93a1a1
+set $S_base2   #eee8d5
+set $S_base3   #fdf6e3
+
+#Light
+#set $S_base03  #fdf6e3
+#set $S_base02  #eee8d5
+#set $S_base01  #93a1a1
+#set $S_base00  #839496
+#set $S_base0   #657b83
+#set $S_base1   #586e75
+#set $S_base2   #073642
+#set $S_base3   #002b36
+
+bar {
+  colors {
+    background $S_base02
+    statusline $S_base1
+  }
+
+  font Ricty 10.5
+  gaps 8
+  height 16
+  position top
+  status_command i3status-rs
+  status_edge_padding 0
+  status_padding 0
+}
+
+bindsym $alt+r  reload
+bindsym $alt+F4 kill
+
+bindsym $win+t workspace $alacritty, exec [ "$(pgrep alacritty)" ] || alacritty
+bindsym $win+a workspace $alcom,     exec [ "$(pgrep ALCOM)"     ] || ALCOM
+bindsym $win+b workspace $blender
+bindsym $win+d workspace $discord,   exec                             discord-canary
+bindsym $win+p workspace $firealpaca
+bindsym $win+f workspace $firefox,   exec [ "$(pgrep firefox)"   ] || firefox
+bindsym $win+m workspace $spotify,   exec [ "$(pgrep spotify)"   ] || spotify
+bindsym $win+g workspace $steam,     exec                             steam
+bindsym $win+u workspace $unity
+bindsym $win+v workspace $vrchat
+
+bindsym $win+s       exec grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" ~/Pictures/"$(date +%F%T.png | sed 's/[-:]//g')"
+bindsym $win+s+Ctrl  exec slurp | grim -g - ~/Pictures/"$(date +%F%T.png | sed 's/[-:]//g')"
+bindsym $win+s+Shift exec swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | grim -g - ~/Pictures/"$(date +%F%T.png | sed 's/[-:]//g')"
+
+default_border none
+default_floating_border none
+
+for_window [app_id="Alacritty"]                move container to workspace $alacritty
+for_window [app_id="ALCOM"]                    move container to workspace $alcom
+for_window [app_id="blender"]                  move container to workspace $blender
+for_window [class="discord-canary"]            move container to workspace $discord
+for_window [class="steam_app_458750"]          move container to workspace $firealpaca
+for_window [app_id="firefox"]                  move container to workspace $firefox
+for_window [class="Spotify"]                   move container to workspace $spotify
+for_window [class="steam"]                     move container to workspace $steam
+for_window [class="Unity" title="Unity - .*"]  move container to workspace $unity
+for_window [class="unityhub"]                  move container to workspace $unity
+for_window [class="steam_app_438100"]          move container to workspace $vrchat
+for_window [app_id="io\.github\.wivrn\.wivrn"] move container to workspace $wivrn
+
+for_window [class="steam_app_458750"]          floating enable
+for_window [class="steam_app_438100"]          floating enable
+for_window [class="Unity"]                     floating enable
+for_window [class="Unity" title="Unity - .*"]  floating disable
+for_window [class="Unity" title="VRChat SDK"]  resize set height 100ppt, move position 200px 0
+
+gaps inner 8
+
+input type:keyboard {
+  repeat_delay 200
+  repeat_rate 20
+}
+
+input type:touchpad {
+  tap disabled
+}
+
+output * {
+  background ~/repositories/dotfiles/wallpaper.png fill
+  subpixel none
+}
+
+exec exec alacritty
+exec exec discord-canary
+exec exec fcitx5
+exec exec spotify
+exec exec steam
+exec exec wivrn-server
+
+# vim:set ft=conf:

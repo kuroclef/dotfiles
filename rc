@@ -1,0 +1,50 @@
+#!/bin/sh
+
+alias cp='cp -rf'
+alias feh='feh -dF'
+alias ftp='ftp -p'
+alias grep='grep --color=auto'
+alias ln='ln -srnf'
+alias logout='swaymsg exit'
+alias ls='ls -A --color=auto --group-directories-first'
+alias lscheckout='sudo pacman -Qkk | grep \)$ |& sort'
+alias lsdisowned='comm -23 <(find /{etc,usr,var} \( -path /etc/\*cert\* -o -path /usr/share/mime -o -path /var/\*/\*man \) -prune -o -type d -printf %p/\\n -o -print 2>/dev/null | sort) <(pacman -Qlq | sort -u)'
+alias lsorphaned='comm -23 <(pacman -Qdq) <(pacman -Qeq | xargs -l pactree -lu | sed -E "s/[<=>].+//" | sort -u)'
+alias lspackages='pacman -Qeq'
+alias mkdir='mkdir -p'
+alias output-analog='pacmd set-default-sink alsa_output.pci-0000_00_1f.3.analog-stereo'
+alias output-hdmi='pacmd set-default-sink alsa_output.hw_0_7'
+alias pacman='pacman --color=auto'
+alias rm='rm -rf'
+alias sl=systemctl
+alias sudo='sudo '
+alias wallpaper='feh --bg-tile --no-fehbg'
+alias yt-dlp='yt-dlp -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]"'
+
+fetchallgit() {
+  find ~/VRChat-avatars/{.*,*}/.git ~/repositories/*/.git -prune -execdir sh -c 'git fetch --all' sh {} +
+}
+
+gcallgit() {
+  find ~/VRChat-avatars/{.*,*}/.git ~/repositories/*/.git -prune -execdir sh -c 'git reflog expire --expire=now --all; git gc --prune=now --aggressive' sh {} +
+}
+
+lsgit() {
+  find ~/VRChat-avatars/{.*,*}/.git ~/repositories/*/.git -prune -execdir sh -c '. ~/repositories/dotfiles/git/git-prompt.sh; __git_ps1 "%s \t"; basename "$PWD"' sh {} +
+}
+
+resetallgit() {
+  find ~/repositories/*/.git -prune -execdir sh -c 'git reset --hard origin/"$(git symbolic-ref --short HEAD)"' sh {} +
+}
+
+updatevrctemplate() {
+  find ~/VRChat-avatars/*/.git -prune -execdir sh -c 'git rebase template-SDK3/master; git rebase --skip; git filter-date' sh {} +
+}
+
+lsimages() {
+  find Assets \( -iname *.bmp -o -iname *.gif -o -iname *.jpeg -o -iname *.jpg -o -iname *.png -o -iname *.tga \) -exec identify -format '%i%wx%h\n' {} +
+}
+
+grepmetadata_images() {
+  find Assets \( -iname *.bmp.meta -o -iname *.gif.meta -o -iname *.jpeg.meta -o -iname *.jpg.meta -o -iname *.png.meta -o -iname *.tga.meta \) -exec grep "$@" {} +
+}

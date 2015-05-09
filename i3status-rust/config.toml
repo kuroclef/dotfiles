@@ -1,0 +1,28 @@
+[theme]
+theme = "native"
+
+[icons]
+icons = "awesome4"
+
+[[block]]
+block = "music"
+format = "{$combo.str(max_w:128)|}"
+player = "spotify"
+
+[[block]]
+block = "sound"
+
+[[block]]
+block  = "net"
+format = "$icon"
+
+[[block]]
+block = "battery"
+device = "DisplayDevice"
+driver = "upower"
+format = "$percentage $time"
+
+[[block]]
+block = "time"
+interval = 1
+format = "$timestamp.datetime(f:'%F %a %R')"
