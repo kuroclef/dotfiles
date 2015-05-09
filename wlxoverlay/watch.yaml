@@ -1,0 +1,46 @@
+width: 0.08
+
+size: [240, 140]
+
+elements:
+  - type: Label
+    rect: [0, 70, 240, 70]
+    font_size: 70
+    fg_color: "#ffffff"
+    source: Clock
+    format: "%R"
+    #source: Static
+    #text: "00:00"
+
+  - type: Label
+    rect: [0, 106, 172, 24]
+    font_size: 24
+    fg_color: "#ffffff"
+    source: Clock
+    format: "%F"
+    #source: Static
+    #text: "0000-00-00"
+
+  - type: Label
+    rect: [172, 106, 68, 24]
+    font_size: 24
+    fg_color: "#ffffff"
+    source: Clock
+    format: "%a"
+    #source: Static
+    #text: "Mon"
+
+  - type: Label
+    rect: [0, 136, 172, 18]
+    font_size: 18
+    fg_color: "#ffffff"
+    source: Static
+    text: "VRAM:           GB/12GB"
+
+  - type: Label
+    rect: [74, 136, 68, 24]
+    font_size: 24
+    fg_color: "#ffffff"
+    source: Exec
+    command: [ "sh", "-c", "nvidia-smi --query-gpu=memory.used --format=noheader,nounits | awk '{ printf \"%4.1f\", $1 / 1024 }'" ]
+    interval: 1.0
