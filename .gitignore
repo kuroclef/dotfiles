@@ -1,0 +1,6 @@
+vim/*
+!vim/vimrc
+wlxoverlay/*
+!wlxoverlay/openxr_actions.json5
+!wlxoverlay/watch.yaml
+zsh_history

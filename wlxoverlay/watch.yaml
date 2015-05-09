@@ -1,0 +1,32 @@
+# looking to make changes?
+# drop me in ~/.config/wlxoverlay/watch.yaml
+#
+
+width: 0.115
+
+size: [400, 200]
+
+elements:
+  # background panel
+  - type: Panel
+    rect: [0, 30, 400, 130]
+    corner_radius: 20
+    bg_color: "#24273a"
+
+  # local clock
+  - type: Label
+    rect: [19, 90, 200, 50]
+    corner_radius: 4
+    font_size: 46 # Use 32 for 12-hour time
+    fg_color: "#cad3f5"
+    source: Clock
+    format: "%R"
+
+  # local date
+  - type: Label
+    rect: [20, 117, 200, 20]
+    corner_radius: 4
+    font_size: 14
+    fg_color: "#cad3f5"
+    source: Clock
+    format: "%F %a"
