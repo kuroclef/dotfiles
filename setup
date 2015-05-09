@@ -1,0 +1,19 @@
+#!/bin/bash
+
+cd "$(dirname "$(readlink -f "$0")")"
+
+mkdir -p ~/.config/pulse
+#touch ~/.config/mpd/{database,log,pid,state,sticker.sql}
+find alacritty fontconfig git gtk-3.0 i3status-rust pulse/default.pa sway -maxdepth 0 -exec ln -srnf {} ~/.config/{} \;
+find vim zprofile zshrc -maxdepth 0 -exec ln -srnf {} ~/.{} \;
+
+plugindir=vim/pack/_/start
+[ ! -d "$plugindir" ] || exit
+
+mkdir -p ~/repositories; cd ~/repositories
+git clone git@github.com:altercation/vim-colors-solarized.git
+git clone git@github.com:tyru/eskk.vim.git
+
+cd - >/dev/null; mkdir -p "$plugindir"; cd "$plugindir"
+ln -srnf ~/repositories/vim-colors-solarized .
+ln -srnf ~/repositories/eskk.vim .
