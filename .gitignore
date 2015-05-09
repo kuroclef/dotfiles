@@ -1,0 +1,5 @@
+vim/*
+!vim/vimrc
+wlxoverlay/*
+!wlxoverlay/openxr_actions.json5
+zsh_history
