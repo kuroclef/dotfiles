@@ -1,0 +1,21 @@
+<layout>
+  <macro name="button_style" border="0" color="#00000000" hover_color="#00000000" />
+
+  <template name="Set">
+    <Button macro="button_style" id="set_${idx}" _press="::SetToggle ${idx}" />
+  </template>
+
+  <elements>
+    <Button macro="button_style" _press="::ShellExec $HOME/.config/wayvr/theme/gui/VRAM">
+      <div flex_direction="column">
+        <label _source="clock" _display="time" size="70" align="center" />
+        <label _source="clock" _display="%F %a" size="24" align="center" />
+        <label id="vram" size="20" align="center" />
+      </div>
+    </Button>
+
+    <div id="sets_root" display="none">
+      <Set idx="0" />
+    </div>
+  </elements>
+</layout>
