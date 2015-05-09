@@ -1,0 +1,25 @@
+[theme]
+theme = "native"
+
+[icons]
+icons = "emoji"
+
+[[block]]
+block = "music"
+format = "{ $icon $combo |}"
+player = "spotify"
+
+[[block]]
+block = "focused_window"
+format = "{ $title |}"
+
+[[block]]
+block = "sound"
+[[block.click]]
+button = "left"
+cmd = "pavucontrol"
+
+[[block]]
+block = "time"
+interval = 1
+format = " $icon $timestamp.datetime(f:'%F %a %R') "
