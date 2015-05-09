@@ -1,0 +1,134 @@
+call plug#begin()
+
+Plug 'altercation/vim-colors-solarized'
+Plug 'vim-skk/eskk.vim'
+
+"-------------------------------------------------------------------------------
+" https://mattn.kaoriya.net/software/vim/20191231213507.htm
+"-------------------------------------------------------------------------------
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'mattn/vim-lsp-icons'
+
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+"-------------------------------------------------------------------------------
+
+call plug#end()
+
+"-------------------------------------------------------------------------------
+" https://mattn.kaoriya.net/software/vim/20191231213507.htm
+"-------------------------------------------------------------------------------
+if empty(globpath(&rtp, 'autoload/lsp.vim'))
+  finish
+endif
+
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> <f2> <plug>(lsp-rename)
+  inoremap <expr> <cr> pumvisible() ? "\<c-y>\<cr>" : "\<cr>"
+endfunction
+
+augroup lsp_install
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+command! LspDebug let lsp_log_verbose=1 | let lsp_log_file = expand('~/lsp.log')
+
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+let g:asyncomplete_auto_popup = 1
+"let g:asyncomplete_auto_completeopt = 0
+let g:asyncomplete_popup_delay = 200
+let g:lsp_text_edit_enabled = 1
+"-------------------------------------------------------------------------------
+
+set background=dark
+set backspace=indent,eol,start
+set cursorline
+set display=lastline
+set encoding=utf-8
+set expandtab
+set fileencodings=utf-8,cp932
+set nofixendofline
+set ignorecase
+set laststatus=2
+set list
+set listchars=tab:»\ ,trail:\ ,
+set pumheight=10
+set scrolloff=2
+set shiftwidth=2
+set smartcase
+set softtabstop=2
+set statusline=%f\ %r%m%=0x%B\ %l/%L\ %{&fenc.','.&ff}\ %y
+set tabstop=2
+set viminfo=
+set wildignore=*.od*,*.pdf
+set wildignorecase
+set wildmode=list:longest,full
+set nowrap
+syntax on
+
+cnoremap % <C-u>%s/\v
+
+inoremap <expr><BS>  pumvisible() ? "\<C-e>" : "\<BS>"
+inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
+
+nnoremap <TAB>   <C-w>
+nnoremap <CR>    o<Esc>
+nnoremap <Space> i<Space><Esc>
+nnoremap /       /\v
+nnoremap :       ;
+nnoremap ;       :
+nnoremap Y       y$
+nnoremap j       gj
+nnoremap k       gk
+
+augroup _
+  autocmd!
+  autocmd FileType cpp        call s:ccSetup()
+  autocmd FileType javascript call s:jsSetup()
+  autocmd FileType man        setl nolist
+  autocmd FileType tex        call s:texSetup()
+  autocmd ColorScheme,VimEnter * highlight StatusLine   cterm=NONE gui=NONE
+  autocmd ColorScheme,VimEnter * highlight StatusLineNC cterm=NONE gui=NONE
+augroup END
+
+function! s:ccSetup()
+  syntax match Constant /\v<\u[A-Z_]+>/
+  syntax match Function /\v<\h\w*>\ze\(/
+  syntax match Type     /\v<\u\l\h*>\ze[^(]|<\u+>|<string>/
+endfunction
+
+function! s:jsSetup()
+  syntax match Constant /\v<\u[A-Z_]+>/
+  syntax match Function /\v<\h\w*>\ze[\(`]/
+  highlight link javaScriptIdentifier Type
+  highlight link javaScriptNumber     Number
+endfunction
+
+function! s:texSetup()
+  unlet g:loaded_matchparen
+  runtime plugin/matchparen.vim
+endfunction
+
+let g:eskk#dictionary        = "/dev/null"
+let g:eskk#directory         = "/dev/null"
+let g:eskk#egg_like_newline  = 1
+let g:eskk#large_dictionary  = "~/repositories/dotfiles/skk/SKK-JISYO.L"
+let g:loaded_matchparen      = 1
+let g:loaded_netrw           = 1
+let g:loaded_netrwPlugin     = 1
+let g:rust_recommended_style = 0
+runtime ftplugin/man.vim
+filetype plugin indent on
+
+if &t_Co == 256 || has("gui_running")
+  let g:solarized_termtrans = 1
+  colorscheme solarized
+endif

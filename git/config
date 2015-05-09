@@ -1,0 +1,36 @@
+[alias]
+  amend       = !git add . && git commit --allow-empty --amend --no-edit
+  commit      = commit --allow-empty --allow-empty-message
+  dispose     = !git reflog expire --all --expire=now && git gc --aggressive --prune=now
+  filter-date = filter-branch -f --env-filter 'GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"'
+
+[core]
+  autocrlf  = false
+  quotepath = false
+  symlinks  = true
+
+[diff]
+  tool = vimdiff
+
+[difftool]
+  prompt = false
+
+[fetch]
+  parallel = 8
+
+[http]
+  postBuffer = 1073741824
+
+[pager]
+  diff = ~/repositories/dotfiles/git/diff-highlight | less
+  log  = ~/repositories/dotfiles/git/diff-highlight | less
+  show = ~/repositories/dotfiles/git/diff-highlight | less
+
+[push]
+  default = matching
+
+[user]
+  email = kuroclef@gmail.com
+  name  = Moriya Kazumi
+
+# vim:set ft=gitconfig:

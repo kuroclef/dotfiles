@@ -1,0 +1,4 @@
+rm -r    ~/.local/share/Steam/steamapps/compatdata/438100
+mkdir -p ~/.local/share/Steam/steamapps/compatdata/438100/pfx/drive_c/users/steamuser/Pictures
+ln -s -t ~/.local/share/Steam/steamapps/compatdata/438100/pfx/drive_c/users/steamuser/Pictures ~/Pictures/VRChat
+
