@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd "$(dirname "$(readlink -f "$0")")"
+
+find alacritty fontconfig git gtk-3.0 i3status-rust sway wayvr -prune -exec ln -srnf {} ~/.config/{} \;
+ln -srnf gtk-3.0 ~/.config/gtk-4.0
+ln -srnf profile ~/.bash_profile
+ln -srnf profile ~/.zprofile
+ln -srnf rc      ~/.bashrc
+ln -srnf rc      ~/.zshrc
+ln -srnf vim     ~/.vim
+
+[ -f ~/.vim/autoload/plug.vim ] && exit
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

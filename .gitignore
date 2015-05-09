@@ -1,0 +1,5 @@
+/vim/*
+!/vim/vimrc
+/wayvr/conf.d/pw_tokens.yaml
+/wlxoverlay/conf.d/pw_tokens.yaml
+/zsh_history

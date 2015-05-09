@@ -1,0 +1,148 @@
+include /etc/sway/config.d/*
+
+set $alt Mod1
+set $win Mod4
+set $mod $win
+
+set $alacritty  Alacritty
+set $alcom      ALCOM
+set $blender    Blender
+set $discord    Discord
+set $firealpaca FireAlpaca
+set $firefox    Firefox
+set $game       Game
+set $spotify    Spotify
+set $steam      Steam
+set $unity      Unity
+set $unityhub   UnityHub
+set $vrchat     VRChat
+set $wivrn      WiVRn
+
+ #Solarized
+set $S_yellow  #b58900
+set $S_orange  #cb4b16
+set $S_red     #dc322f
+set $S_magenta #d33682
+set $S_violet  #6c71c4
+set $S_blue    #268bd2
+set $S_cyan    #2aa198
+set $S_green   #859900
+
+#Dark
+set $S_base03  #002b36
+set $S_base02  #073642
+set $S_base01  #586e75
+set $S_base00  #657b83
+set $S_base0   #839496
+set $S_base1   #93a1a1
+set $S_base2   #eee8d5
+set $S_base3   #fdf6e3
+
+#Light
+#set $S_base03  #fdf6e3
+#set $S_base02  #eee8d5
+#set $S_base01  #93a1a1
+#set $S_base00  #839496
+#set $S_base0   #657b83
+#set $S_base1   #586e75
+#set $S_base2   #073642
+#set $S_base3   #002b36
+
+assign [app_id="^Alacritty$"]       $alacritty
+assign [app_id="^ALCOM$"]           $alcom
+assign [app_id="^blender$"]         $blender
+assign [class="^discord$"]          $discord
+assign [app_id="^firefox$"]         $firefox
+assign [class="^firefox$"]          $firefox
+assign [class="^Spotify$"]          $spotify
+assign [class="^steam$"]            $steam
+assign [class="^steam_app_438100$"] $vrchat
+assign [class="^steam_app_458750$"] $firealpaca
+assign [class="^steam_app_"]        $game
+assign [class="^Unity$"]            $unity
+assign [class="^unityhub$"]         $unityhub
+assign [app_id="wivrn$"]            $wivrn
+
+bar {
+  colors {
+    background $S_base03
+    statusline $S_base0
+  }
+
+  gaps 8
+  height 16
+  position top
+  status_command i3status-rs
+  status_edge_padding 0
+  status_padding 0
+}
+
+bindsym --no-repeat $mod+4 kill
+bindsym --no-repeat $mod+r reload
+bindsym --no-repeat $mod+j move workspace output left
+bindsym --no-repeat $mod+k move workspace output right
+
+bindsym --no-repeat $mod+t workspace $alacritty, exec alacritty
+bindsym --no-repeat $mod+a workspace $alcom,     exec ALCOM
+bindsym --no-repeat $mod+b workspace $firefox,   exec [ "$(pgrep firefox)" ] || firefox
+bindsym --no-repeat $mod+d workspace $discord,   exec discord
+bindsym --no-repeat $mod+g workspace $steam,     exec steam
+bindsym --no-repeat $mod+s workspace $spotify,   exec spotify
+bindsym --no-repeat $mod+u workspace $unityhub,  exec unityhub
+bindsym --no-repeat $mod+w workspace $wivrn,     exec [ "$(pgrep wivrn-dashboard)" ] || wivrn-dashboard
+
+bindsym --no-repeat $mod+p       exec grim ~/Pictures/"$(date +%F%T.png | sed 's/[-:]//g')"
+bindsym --no-repeat $mod+p+Ctrl  exec grim -g "$(slurp)" ~/Pictures/"$(date +%F%T.png | sed 's/[-:]//g')"
+bindsym --no-repeat $mod+p+Shift exec swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | grim -g - ~/Pictures/"$(date +%F%T.png | sed 's/[-:]//g')"
+
+default_border none
+default_floating_border none
+
+font Ricty 10.5
+
+for_window [app_id="^$" title="^$"]      floating enable, move position cursor
+for_window [class="^steam_app_"]         floating enable
+for_window [title="^FireAlpaca SE"]      floating disable
+for_window [title="^Picture-in-Picture"] floating enable
+
+for_window [class="^Unity$"]                            floating enable
+for_window [class="^Unity$" title="<OpenGL.*>$"]        floating disable
+for_window [class="^Unity$" title="<Vulkan.*>$"]        floating disable
+for_window [class="^Unity$" title="^Animation$"]        resize set 50ppt 100ppt, move position center
+for_window [class="^Unity$" title="^Import.*Package$"]  resize set 30ppt 50ppt, move position center
+for_window [class="^Unity$" title="^MochiFitter$"]      resize set 30ppt 70ppt, move position center
+for_window [class="^Unity$" title="^Preview$"]          resize set height 100ppt, move position center
+for_window [class="^Unity$" title="^Select"]            resize set width 30ppt, move position center
+for_window [class="^Unity$" title="^UnityEditor"]       move position cursor
+for_window [class="^Unity$" title="^VRChat SDK$"]       resize set height 100ppt, move position 200px 0
+
+gaps inner 8
+
+input type:keyboard {
+  repeat_delay 300
+  repeat_rate 30
+}
+
+input type:touchpad {
+  tap disabled
+}
+
+output * {
+  background ~/repositories/dotfiles/wallpaper.png fill
+  subpixel none
+}
+
+output HDMI-A-1 pos 0 0
+output DP-1 pos 1920 0
+
+workspace $alacritty output HDMI-A-1
+workspace $discord   output HDMI-A-1
+workspace $steam     output HDMI-A-1
+workspace 0 output DP-1
+
+exec fcitx5
+exec alacritty
+exec discord
+exec steam
+
+# vim:set ft=swayconfig:
