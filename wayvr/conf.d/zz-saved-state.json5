@@ -1,0 +1,81 @@
+{
+  "sets": [
+    {
+      "name": "",
+      "overlays": {
+        "DP-2": {
+          "alpha": 1.0,
+          "grabbable": true,
+          "interactable": true,
+          "positioning": "Anchored",
+          "curvature": 0.15,
+          "additive": false,
+          "saved_transform": null,
+          "block_input": true,
+          "angle_fade": false,
+          "align_to_hmd": false
+        }
+      },
+      "hidden_overlays": {}
+    },
+    {
+      "name": "global",
+      "overlays": {
+        "watch": {
+          "alpha": 0.02,
+          "grabbable": false,
+          "interactable": true,
+          "positioning": {
+            "FollowHand": {
+              "hand": "Left",
+              "lerp": 1.0
+            }
+          },
+          "curvature": null,
+          "additive": false,
+          "saved_transform": null,
+          "block_input": true,
+          "angle_fade": true,
+          "align_to_hmd": false
+        }
+      },
+      "hidden_overlays": {}
+    }
+  ],
+  "spawn_overlays": [],
+  "last_set": 0,
+  "attribs": [
+    [
+      "DP-2",
+      []
+    ],
+    [
+      "DP-1",
+      []
+    ],
+    [
+      "kbd",
+      []
+    ],
+    [
+      "anchor",
+      []
+    ],
+    [
+      "watch",
+      []
+    ],
+    [
+      "Dashboard",
+      []
+    ],
+    [
+      "grab-help",
+      []
+    ],
+    [
+      "whisper",
+      []
+    ]
+  ]
+}

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+while :
+do
+  wayvrctl panel-modify watch vram set-text \
+    "$(nvidia-smi --query-gpu=memory.used --format=noheader,nounits | awk '{ printf "VRAM:%.1fGB/12GB", $1 / 1024 }')"
+  sleep 1
+done
